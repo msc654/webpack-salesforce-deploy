@@ -1,11 +1,10 @@
 var mavensmate = require('mavensmate'),
-path = require('path'),
-payload = {
-    paths :[ __dirname + '/../../resource-bundles/' + path.basename(__dirname) + '.resource/']
-};
+payload = {};
 
 var WebpackSalesforceDeployPlugin = module.exports = function(options) {
     this.options = options || {};
+    payload.paths = [];
+    payload.paths.push = this.options.resourcePath;
 };
 
 WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function(stats) {
@@ -22,12 +21,18 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function(stats) {
             headless: true,
             verbose: true
         });
-        client.setProject(__dirname + '/../../', function(err, response) {
+
+        client.setProject(this.options.projectPath, function(err, response) {
             client.executeCommand('deploy-resource-bundle', payload, function(err, response) {
                 console.log(response);
+                console.log(err);
                 // full list of commands can be found in lib/mavensmate/commands
             });
         });
 
     }
+};
+
+WebpackSalesforceDeployPlugin.prototype.apply = function(compiler) {
+    compiler.plugin('done', this.triggerDeploy.bind(this));
 };
