@@ -1,0 +1,49 @@
+<div id="destination_compare_options">
+	<ul>
+		{% for destination in args['destinations'] %}
+			{% if loop.first == True  %}
+			<li class="active"><a href="#result-compare-{{ loop.index0 }}">{{ destination['username'] }}</a></li>
+			{% else %}
+			<li class=""><a href="#result-compare-{{ loop.index0 }}">{{ destination['username'] }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>
+
+<div id="extra_compare_tabs">
+	{% for username, result in compare_result.iteritems() %}
+	<div class="tab-pane result_wrapper" id="result-compare-{{ loop.index0 }}" style="padding:10px;">
+		<h5 style="font-size:20px;border-bottom: 2px solid rgb(52, 73, 94);padding-bottom:5px;position:relative;">
+			Destination:&nbsp;{{ username }}
+		</h5>
+		<table class="table table-striped tablesorter" style="font-size:15px;">
+			<thead>
+				<tr>
+					<th width="50" class="sorter-false">&nbsp;</th>
+					<th class="sorter-true">Metadata Name</th>
+					<th class="sorter-true">Metadata Type</th>
+					<th class="sorter-true">Deploy Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for key, value in result.iteritems() %}
+					<tr>
+						<td width="50">
+							{% if value['action'] == 'insert'  %}
+								<span class="fui-plus-inverted text-success"></span>
+							{% elif value['action'] == 'update'  %}
+								<span class="fui-new text-warning"></span>
+							{% elif value['action'] == 'update_conflict'  %}
+								<span class="fui-alert text-danger"></span>
+							{% endif %}
+						</td>
+						<td>{{ value['name'] }}</td>
+						<td>{{ value['type'] }}</td>
+						<td>{{ value['message'] }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>			
+	</div>
+	{% endfor %}
+</div>

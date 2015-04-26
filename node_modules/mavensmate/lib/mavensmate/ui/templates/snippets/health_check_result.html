@@ -1,0 +1,111 @@
+<h6>Apex</h6>
+<table class="table table-striped">
+  {% for key, value in result['apex_statistics'].iteritems() %}
+  <tr>
+      <td>
+        <a href="javascript:void(0)" class="match-label">{{ value["label"] }}</a>
+        <div class="matches">
+          {% for result in value['results'] %}
+            <div class="match">
+              <div class="match-file-name">
+                <span><i class="icon-file"></i>&nbsp;&nbsp;{{ result['file_name'] }}</span>
+              </div>
+              <div class="match-body">
+                {% for match in result['matches'] %}
+                  <div class="match-item">
+                    {% if match is mapping and "lineNumber" in match %}
+                      <pre class="prettyprint mvl hc linenums:{{match['lineNumber']}}">
+                    {% else %}
+                      <pre class="prettyprint mvl hc">
+                    {% endif %}
+                    {% if match is mapping and "statement" in match %}
+                      {% if match["statement"] is mapping and "line_contents" in match %}
+                        {{ htmlize(match["line_contents"]) }}
+                      {% else %}
+                        {{ htmlize(match["statement"]) }}
+                      {% endif %}
+                    {% elif match is mapping and "lineNumber" in match %}
+                      {{ htmlize(match["line_contents"]) }}
+                    {% else %}
+                      {{ match}}
+                    {% endif %}
+                    <button class="btn btn-mini btn-info btn-show-in-client" onclick="open_file(this, '{{result['file_name']}}', {{match['lineNumber']}})">View</button>
+                    </pre>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </td>
+
+      {% if value['count'] > 2 %}
+        {% set label_class = " label-important"  %}
+      {% elif value['count'] > 0 %}
+        {% set label_class = " label-warning"  %}
+      {% else %}
+        {% set label_class = " label-success"  %}
+      {% endif %}
+
+      <td><span class="nav-label label {{ label_class }}">{{ value["count"] }}</span></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h6>Visualforce</h6>
+<table class="table table-striped">
+  {% for key, value in result['visualforce_statistics'].iteritems() %}
+  <tr>
+      <td>
+        <a href="javascript:void(0)" class="match-label">{{ value["label"] }}</a>
+        <div class="matches">
+          {% for result in value['results'] %}
+            <div class="match">
+              <div class="match-file-name">
+                <span><i class="icon-file"></i>&nbsp;&nbsp;{{ result['file_name'] }}</span>
+              </div>
+              <div class="match-body">
+                {% for match in result['matches'] %}
+                  <div class="match-item">
+                    {% if match is mapping and "lineNumber" in match %}
+                      <pre class="prettyprint mvl hc linenums:{{match['lineNumber']}}">
+                    {% else %}
+                      <pre class="prettyprint mvl hc">
+                    {% endif %}
+                    {% if match is mapping and "statement" in match %}
+                      {% if match["statement"] is mapping and "line_contents" in match %}
+                        {{ htmlize(match["line_contents"]) }}
+                      {% else %}
+                        {{ htmlize(match["statement"]) }}
+                      {% endif %}
+                    {% elif match is mapping and "lineNumber" in match %}
+                      {{ htmlize(match["line_contents"]) }}
+                    {% else %}
+                      {{ match}}
+                    {% endif %}
+                    {% if match is mapping and "lineNumber" in match %}
+                      <button class="btn btn-mini btn-info btn-show-in-client" onclick="open_file(this, '{{result['file_name']}}', {{match['lineNumber']}})">View</button>
+                    {% else %}
+                      <button class="btn btn-mini btn-info btn-show-in-client" onclick="open_file(this, '{{result['file_name']}}', 0)">View</button>
+                    {% endif %}
+                    </pre>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </td>
+
+      {% if value['count'] > 10 %}
+        {% set label_class = " label-important"  %}
+      {% elif value['count'] > 0 %}
+        {% set label_class = " label-warning"  %}
+      {% else %}
+        {% set label_class = " label-success"  %}
+      {% endif %}
+
+      <td><span class="nav-label label {{ label_class }}">{{ value["count"] }}</span></td>
+  </tr>
+  {% endfor %}
+</table>

@@ -1,0 +1,21 @@
+{
+  "name": "WebpackSalesforceDeployPlugin",
+  "version": "1.0.0",
+  "description": "A webpack plugin that deploys a resource bundle to the current project remote Org.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Salesforce",
+    "Webpack",
+    "Plugin",
+    "mavensmate"
+  ],
+  "author": "Matthew Carroll <msc654@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mavensmate": "0.0.35-alpha1",
+    "path": "^0.11.14"
+  }
+}
