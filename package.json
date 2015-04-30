@@ -15,7 +15,9 @@
   "author": "Matthew Carroll <msc654@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "jsforce": "^1.4.1",
     "mavensmate": "0.0.35-alpha1",
+    "node-zip": "^1.1.0",
     "path": "^0.11.14"
   }
 }
