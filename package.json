@@ -1,6 +1,6 @@
 {
   "name": "webpack-salesforce-deploy-plugin",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A webpack plugin that deploys a resource bundle to the current project remote Org.",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,12 @@
   "keywords": [
     "Salesforce",
     "Webpack",
-    "Plugin",
-    "mavensmate"
+    "Plugin"
   ],
   "author": "Matthew Carroll <msc654@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "jsforce": "^1.4.1",
-    "mavensmate": "0.0.35-alpha1",
-    "node-zip": "^1.1.0",
-    "path": "^0.11.14"
+    "node-zip": "^1.1.0"
   }
 }
