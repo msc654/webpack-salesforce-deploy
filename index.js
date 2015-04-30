@@ -45,7 +45,7 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
 
                 // create you metadata for the static resource
                 var metadata = [{
-                    fullName: 'assetName',
+                    fullName: assetName,
                     content: zData,
                     contentType: 'application/zip',
                     cacheControl: 'Private'
