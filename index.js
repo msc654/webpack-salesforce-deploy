@@ -76,7 +76,7 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
             var zDataVendor = zipVendor.generate({base64: true, compression: 'DEFLATE'});
             var zDataCommons = zipCommons.generate({base64: true, compression: 'DEFLATE'});
 
-            var conn = new jsforce.Connection({loginUrl : 'https://login.salesforce.com'});
+            var conn = new jsforce.Connection({loginUrl : jsForceConfig.url || 'https://login.salesforce.com'});
 
             // login to the org
             conn.login(jsForceConfig.username, jsForceConfig.password + jsForceConfig.token, function (err, res) {
