@@ -25,8 +25,8 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
 
     } else if (this.options.resourceFolderPath !== 'undefined') {
 
-
-        var dir = this.options.resourceFolderPath
+        var rawDir = this.options.resourcePath;
+        var dir = rawDir.substring(0, rawDir.indexOf('bundle.js'));
 
         fs.readdir(dir,function(err,files){
             if (err) throw err;
