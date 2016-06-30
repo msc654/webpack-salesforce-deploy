@@ -54,7 +54,7 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
         fs.writeFile('./../../src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
       }
       // Default to true
-      if (this.options.deploy || this.options.copy === undefined) {
+      if (this.options.deploy || this.options.deploy === undefined) {
         var zDataApp = zipApp.generate({ base64: true, compression: 'DEFLATE' });
         var zDataVendor = zipVendor.generate({ base64: true, compression: 'DEFLATE' });
         var zDataCommons = zipCommons.generate({ base64: true, compression: 'DEFLATE' });
