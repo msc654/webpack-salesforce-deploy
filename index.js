@@ -43,7 +43,8 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
           console.log(file);
         }
       });
-      if (this.options.copy) {
+      // Default to true
+      if (this.options.copy || this.options.copy === undefined) {
         var zDataAppBuffer = zipApp.generate({ type: "nodebuffer", compression: "DEFLATE" });
         var zDataVendorBuffer = zipVendor.generate({ type: "nodebuffer", compression: "DEFLATE" });
         var zDataCommonsBuffer = zipCommons.generate({ type: "nodebuffer", compression: "DEFLATE" });
@@ -52,7 +53,8 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
         fs.writeFile('./../../src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
         fs.writeFile('./../../src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
       }
-      if (this.options.deploy) {
+      // Default to true
+      if (this.options.deploy || this.options.copy === undefined) {
         var zDataApp = zipApp.generate({ base64: true, compression: 'DEFLATE' });
         var zDataVendor = zipVendor.generate({ base64: true, compression: 'DEFLATE' });
         var zDataCommons = zipCommons.generate({ base64: true, compression: 'DEFLATE' });
