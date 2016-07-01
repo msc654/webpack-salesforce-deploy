@@ -62,30 +62,34 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
     function deployStaticResources(zipApp, zipVendor, zipCommons) {
         // Create the connection object
         var conn = new jsforce.Connection({ loginUrl: jsForceConfig.url || 'https://login.salesforce.com' }),
-            // The base64 data to sent to Salesforce if we are deploying the code
-            zDataApp = zipApp.generate({ base64: true, compression: 'DEFLATE' }),
-            zDataVendor = zipVendor.generate({ base64: true, compression: 'DEFLATE' }),
-            zDataCommons = zipCommons.generate({ base64: true, compression: 'DEFLATE' }),
-            // Create you metadata for the static resource
-            metaDataPayload = [
-                {
-                    fullName: assetName,
-                    content: zDataApp
-                }, {
-                    fullName: 'vendor',
-                    content: zDataVendor
-                }, {
-                    fullName: 'commons',
-                    content: zDataCommons
-                }
-            ].map(function (bundleDefinition) {
-                return {
-                    fullName: bundleDefinition.fullName,
-                    content: bundleDefinition.content,
-                    contentType: 'application/zip',
-                    cacheControl: 'Private'
-                };
+            metaDataPayload = [];
+
+        if (zipApp.file(/./g).length > 0) {
+            metaDataPayload.push({
+                fullName: assetName,
+                content: zipApp.generate({ base64: true, compression: 'DEFLATE' })
             });
+        }
+        if (zipVendor.file(/./g).length > 0) {
+            metaDataPayload.push({
+                fullName: 'vendor',
+                content: zipVendor.generate({ base64: true, compression: 'DEFLATE' })
+            });
+        }
+        if (zipCommons.file(/./g).length > 0) {
+            metaDataPayload.push({
+                fullName: 'commons',
+                content: zipCommons.generate({ base64: true, compression: 'DEFLATE' })
+            });
+        }
+        metaDataPayload = metaDataPayload.map(function (bundleDefinition) {
+            return {
+                fullName: bundleDefinition.fullName,
+                content: bundleDefinition.content,
+                contentType: 'application/zip',
+                cacheControl: 'Private'
+            };
+        });
 
         // Login to the org
         conn.login(jsForceConfig.username, jsForceConfig.password + jsForceConfig.token, function (err, res) {
@@ -109,9 +113,14 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
             zDataVendorBuffer = zipVendor.generate({ type: 'nodebuffer', compression: 'DEFLATE' }),
             zDataCommonsBuffer = zipCommons.generate({ type: 'nodebuffer', compression: 'DEFLATE' });
 
-        // Copy the zip to the StaticResource folder
-        fs.writeFile('./../../src/staticresources/' + assetName + '.resource', zDataAppBuffer, 'binary');
-        fs.writeFile('./../../src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
-        fs.writeFile('./../../src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
+        if (zipApp.file(/./g).length > 0) {
+            fs.writeFile('./../../src/staticresources/' + assetName + '.resource', zDataAppBuffer, 'binary');
+        }
+        if (zipVendor.file(/./g).length > 0) {
+            fs.writeFile('./../../src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
+        }
+        if (zipCommons.file(/./g).length > 0) {
+            fs.writeFile('./../../src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
+        }
     }
 };
