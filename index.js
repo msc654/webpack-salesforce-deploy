@@ -99,7 +99,7 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
                 if (err) {
                     console.log(err);
                 } else {
-                    if (results[0].success === true) {
+                    if ((results || results[0]) && (results.created === false || results[0].success === true)) {
                         console.log('The Static Resouce: ' + assetName + ', vendor and commons was updated!');
                     } else {
                         console.log(results);
