@@ -1,6 +1,6 @@
 {
   "name": "webpack-salesforce-deploy-plugin",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A webpack plugin that deploys a resource bundle to the current project remote Org.",
   "main": "index.js",
   "scripts": {
