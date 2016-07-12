@@ -92,7 +92,7 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
         });
 
         // Login to the org
-        conn.login(jsForceConfig.username, jsForceConfig.password + jsForceConfig.token, function (err, res) {
+        conn.login(jsForceConfig.username, (jsForceConfig.password || '') + (jsForceConfig.token || ''), function (err, res) {
             if (err) throw err;
             // Actually deploy the Static Resource to Salesforce
             conn.metadata.upsert('StaticResource', metaDataPayload, function (err, results) {
