@@ -2,7 +2,7 @@
 
 ## First time setup steps.
 
-- In most use cases this plugin is about of a spa or Webpack build.
+- In most use cases this plugin is a part of a spa or Webpack build.
 - Because it is designed to work with Salesforce it requires an external config file to hold the Salesforce credentials.
 
 #### Step 1: Create the ``jsforce.config.js`` file in the parent folder of you spa or app.
