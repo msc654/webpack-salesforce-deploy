@@ -113,14 +113,26 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
             zDataVendorBuffer = zipVendor.generate({ type: 'nodebuffer', compression: 'DEFLATE' }),
             zDataCommonsBuffer = zipCommons.generate({ type: 'nodebuffer', compression: 'DEFLATE' });
 
+        // default to two for legacy support
+        if(self.options.nestedLevelFromSrcFolder === undefined){
+            self.options.nestedLevelFromSrcFolder = 2;
+        }
+
+        var insert = '';
+
+        for (var i=0; i < self.options.nestedLevelFromSrcFolder; i++){
+            insert += '../';
+        }
+
         if (zipApp.file(/./g).length > 0) {
-            fs.writeFile('./../../src/staticresources/' + assetName + '.resource', zDataAppBuffer, 'binary');
+
+            fs.writeFile('./' + insert + 'src/staticresources/' + assetName + '.resource', zDataAppBuffer, 'binary');
         }
         if (zipVendor.file(/./g).length > 0) {
-            fs.writeFile('./../../src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
+            fs.writeFile('./' + insert + 'src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
         }
         if (zipCommons.file(/./g).length > 0) {
-            fs.writeFile('./../../src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
+            fs.writeFile('./' + insert + 'src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
         }
     }
 };
