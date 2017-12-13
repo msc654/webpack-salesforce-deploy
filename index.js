@@ -124,15 +124,17 @@ WebpackSalesforceDeployPlugin.prototype.triggerDeploy = function (stats) {
             insert += '../';
         }
 
+        var zipOutputPath = self.options.zipOutputPath || "./" + insert + "src/staticresources/";
+
         if (zipApp.file(/./g).length > 0) {
 
-            fs.writeFile('./' + insert + 'src/staticresources/' + assetName + '.resource', zDataAppBuffer, 'binary');
+            fs.writeFile(zipOutputPath + assetName + '.resource', zDataAppBuffer, 'binary');
         }
         if (zipVendor.file(/./g).length > 0) {
-            fs.writeFile('./' + insert + 'src/staticresources/' + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
+            fs.writeFile(zipOutputPath + 'vendor' + '.resource', zDataVendorBuffer, 'binary');
         }
         if (zipCommons.file(/./g).length > 0) {
-            fs.writeFile('./' + insert + 'src/staticresources/' + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
+            fs.writeFile(zipOutputPath + 'commons' + '.resource', zDataCommonsBuffer, 'binary');
         }
     }
 };
